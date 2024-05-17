@@ -1,9 +1,8 @@
-let fs = require("fs").promises;
+let fs = require("fs-extra");
 let esbuild = require("esbuild");
 let { sassPlugin } = require("esbuild-sass-plugin");
-let getTemplate = (
-  entry
-) => `<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"><link rel="stylesheet" href="./${entry}.css"><link rel="stylesheet" href="./res/iconfont.css"></head>
+let getTemplate = (entry) => `<html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<link rel="stylesheet" href="./res/iconfont.css"><link rel="stylesheet" href="./${entry}.css"></head>
 <body><script src="./${entry}.js"></script></body></html>`;
 let build = async () => {
   let entry = "Index";
@@ -19,6 +18,7 @@ let build = async () => {
   });
 };
 let start = async () => {
+  fs.copySync("./res", "./prod/res");
   await build();
   console.log(`build ok!`);
 };
