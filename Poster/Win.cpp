@@ -1,4 +1,4 @@
-#include "Win.h"
+﻿#include "Win.h"
 #include "Util.h"
 #include <format>
 #include <windowsx.h>
@@ -21,6 +21,7 @@ Win::~Win()
     ctrl->Release();
 }
 
+
 void Win::initSizeAndPos()
 {
     w = 1200;
@@ -38,7 +39,7 @@ void Win::initWindow()
     wcx.cbSize = sizeof(wcx);
     wcx.style = CS_HREDRAW | CS_VREDRAW;
     wcx.lpfnWndProc = &Win::RouteWindowMessage;
-    wcx.cbWndExtra = sizeof(Win *);
+    wcx.cbWndExtra = sizeof(Win*);
     wcx.hInstance = hinstance;
     wcx.hIcon = LoadIcon(NULL, IDI_APPLICATION);
     wcx.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -47,29 +48,27 @@ void Win::initWindow()
     wcx.lpszClassName = clsName.c_str();
     if (!RegisterClassEx(&wcx))
     {
-        MessageBox(NULL, L"ע�ᴰ����ʧ��", L"ϵͳ��ʾ", NULL);
+        MessageBox(NULL, L"注册窗口类失败", L"系统提示", NULL);
         return;
     }
     hwnd = CreateWindowEx(NULL, wcx.lpszClassName, L"Poster", WS_VISIBLE | WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
-                          x, y, w, h, NULL, NULL, hinstance, static_cast<LPVOID>(this));
+        x, y, w, h, NULL, NULL, hinstance, static_cast<LPVOID>(this));
     DWMNCRENDERINGPOLICY policy = DWMNCRP_ENABLED;
     DwmSetWindowAttribute(hwnd, DWMWA_NCRENDERING_POLICY, &policy, sizeof(policy));
-    MARGINS margins = {1, 1, 1, 1};
+    MARGINS margins = { 1,1,1,1 };
     DwmExtendFrameIntoClientArea(hwnd, &margins);
 }
 
-LRESULT CALLBACK Win::RouteWindowMessage(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
+LRESULT CALLBACK Win::RouteWindowMessage(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (msg == WM_NCCREATE)
     {
-        CREATESTRUCT *pCS = reinterpret_cast<CREATESTRUCT *>(lParam);
+        CREATESTRUCT* pCS = reinterpret_cast<CREATESTRUCT*>(lParam);
         LPVOID pThis = pCS->lpCreateParams;
         SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pThis));
-        auto that = static_cast<Win *>(pThis);
+        auto that = static_cast<Win*>(pThis);
         that->hwnd = hWnd;
     }
-    else if (auto obj = reinterpret_cast<Win *>(GetWindowLongPtr(hWnd, GWLP_USERDATA)))
-    {
+    else if (auto obj = reinterpret_cast<Win*>(GetWindowLongPtr(hWnd, GWLP_USERDATA))) {
         return obj->wndProc(hWnd, msg, wParam, lParam);
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
@@ -85,7 +84,7 @@ LRESULT CALLBACK Win::wndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     }
     case WM_GETMINMAXINFO:
     {
-        MINMAXINFO *mminfo = (PMINMAXINFO)lParam;
+        MINMAXINFO* mminfo = (PMINMAXINFO)lParam;
         RECT workArea;
         SystemParametersInfo(SPI_GETWORKAREA, 0, &workArea, 0);
         mminfo->ptMinTrackSize.x = 1200;
@@ -96,27 +95,23 @@ LRESULT CALLBACK Win::wndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         mminfo->ptMaxPosition.y = 1;
         return 0;
     }
-    case WM_EXITSIZEMOVE:
-    {
+    case WM_EXITSIZEMOVE: {
         RECT rect;
         GetWindowRect(hWnd, &rect);
         this->x = rect.left;
         this->y = rect.top;
         return 0;
     }
-    case WM_SIZE:
-    {
+    case WM_SIZE: {
         this->w = LOWORD(lParam);
         this->h = HIWORD(lParam);
-        if (ctrl)
-        {
-            RECT rect{.left{0}, .top{0}, .right{w}, .bottom{h}};
+        if (ctrl) {
+            RECT rect{ .left{0},.top{0},.right{w},.bottom{h} };
             ctrl->SetBoundsAndZoomFactor(rect, 1.0);
         }
         return 0;
     }
-    case WM_DESTROY:
-    {
+    case WM_DESTROY: {
         PostQuitMessage(0);
         return 0;
     }
@@ -129,19 +124,19 @@ bool Win::createPageController()
     auto env = App::getWebViewEnv();
     auto callBackInstance = Callback<ICoreWebView2CreateCoreWebView2ControllerCompletedHandler>(this, &Win::pageCtrlCallBack);
     auto result = env->CreateCoreWebView2Controller(hwnd, callBackInstance.Get());
-    if (FAILED(result))
-    {
+    if (FAILED(result)) {
         return false;
     }
     return true;
 }
 
-BOOL CALLBACK EnumChildProc(HWND hwndChild, LPARAM lParam)
-{
-    wchar_t clsNameBuffer[MAX_PATH] = {0};
+
+
+BOOL CALLBACK EnumChildProc(HWND hwndChild, LPARAM lParam) {
+    wchar_t clsNameBuffer[MAX_PATH] = { 0 };
     int length = GetClassName(hwndChild, clsNameBuffer, MAX_PATH);
     std::wstring clsName(clsNameBuffer);
-    // �����ȡ�ɹ������ط���ֵ��������std::wstring����
+    // 如果获取成功（返回非零值），则构造std::wstring对象
     if (clsName.ends_with(L"RenderWidgetHostHWND"))
     {
         return TRUE;
@@ -149,7 +144,8 @@ BOOL CALLBACK EnumChildProc(HWND hwndChild, LPARAM lParam)
     return TRUE;
 }
 
-HRESULT Win::pageCtrlCallBack(HRESULT result, ICoreWebView2Controller *controller)
+
+HRESULT Win::pageCtrlCallBack(HRESULT result, ICoreWebView2Controller* controller)
 {
     HRESULT hr;
     hr = controller->get_CoreWebView2(&webview);
@@ -158,7 +154,11 @@ HRESULT Win::pageCtrlCallBack(HRESULT result, ICoreWebView2Controller *controlle
     settings->put_IsScriptEnabled(TRUE);
     settings->put_AreDefaultScriptDialogsEnabled(TRUE);
     settings->put_IsWebMessageEnabled(TRUE);
-    RECT rect{.left{0}, .top{0}, .right{w}, .bottom{h}};
+    wil::com_ptr<ICoreWebView2Settings8> settings8;
+    settings->QueryInterface(IID_PPV_ARGS(&settings8));
+    settings8->put_IsReputationCheckingRequired(false);
+
+    RECT rect{ .left{0},.top{0},.right{w},.bottom{h} };
     hr = controller->put_Bounds(rect);
     ctrl = controller;
 
@@ -176,17 +176,17 @@ HRESULT Win::pageCtrlCallBack(HRESULT result, ICoreWebView2Controller *controlle
     auto messageReceivedCB = Callback<ICoreWebView2WebMessageReceivedEventHandler>(this, &Win::messageReceived);
     webview->add_WebMessageReceived(messageReceivedCB.Get(), &token);
 
-    // webview->add_WebMessageReceived(Callback<ICoreWebView2WebMessageReceivedEventHandler>(
-    //     [](ICoreWebView2* webview, ICoreWebView2WebMessageReceivedEventArgs* args) -> HRESULT {
-    //         wil::unique_cotaskmem_string message;
-    //         args->TryGetWebMessageAsString(&message);
-    //         // processMessage(&message);
-    //         webview->PostWebMessageAsString(message.get());
-    //         return S_OK;
-    //     }).Get(), &token);
+    //webview->add_WebMessageReceived(Callback<ICoreWebView2WebMessageReceivedEventHandler>(
+    //    [](ICoreWebView2* webview, ICoreWebView2WebMessageReceivedEventArgs* args) -> HRESULT {
+    //        wil::unique_cotaskmem_string message;
+    //        args->TryGetWebMessageAsString(&message);
+    //        // processMessage(&message);
+    //        webview->PostWebMessageAsString(message.get());
+    //        return S_OK;
+    //    }).Get(), &token);
 
-    // std::wstring script = L"console.log(123);window.chrome.webview.postMessage({\"name\":123 });console.log(456);";
-    // hr = webview->AddScriptToExecuteOnDocumentCreated(script.c_str(), nullptr);
+    //std::wstring script = L"console.log(123);window.chrome.webview.postMessage({\"name\":123 });console.log(456);";
+    //hr = webview->AddScriptToExecuteOnDocumentCreated(script.c_str(), nullptr);
 #ifdef DEBUG
     auto url = L"http://localhost:4321/index.html";
     hr = webview->Navigate(url);
@@ -200,18 +200,18 @@ HRESULT Win::pageCtrlCallBack(HRESULT result, ICoreWebView2Controller *controlle
     return hr;
 }
 
-HRESULT Win::navigationCompleted(ICoreWebView2 *webview, ICoreWebView2NavigationCompletedEventArgs *args)
+HRESULT Win::navigationCompleted(ICoreWebView2* webview, ICoreWebView2NavigationCompletedEventArgs* args)
 {
     return S_OK;
 }
 
-HRESULT Win::messageReceived(ICoreWebView2 *webview, ICoreWebView2WebMessageReceivedEventArgs *args)
+HRESULT Win::messageReceived(ICoreWebView2* webview, ICoreWebView2WebMessageReceivedEventArgs* args)
 {
     wil::unique_cotaskmem_string messageRaw;
-    // args->TryGetWebMessageAsString(&messageRaw);
+    //args->TryGetWebMessageAsString(&messageRaw);
     args->get_WebMessageAsJson(&messageRaw);
     std::wstring message = messageRaw.get();
-    // webview->PostWebMessageAsString(L"allen");
-    // webview->PostWebMessageAsJson(L"{\"name\":123 }");
+    //webview->PostWebMessageAsString(L"allen");
+    //webview->PostWebMessageAsJson(L"{\"name\":123 }");
     return S_OK;
 }
