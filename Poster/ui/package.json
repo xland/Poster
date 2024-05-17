@@ -1,0 +1,16 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./script/dev",
+    "prod": "node ./script/prod"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.21.1",
+    "esbuild-sass-plugin": "^3.2.0"
+  }
+}

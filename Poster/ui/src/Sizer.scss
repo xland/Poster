@@ -1,0 +1,75 @@
+.topBorder {
+  z-index: 999999;
+  position: absolute;
+  top: 0px;
+  height: 6px;
+  left: 0px;
+  right: 0px;
+  display: flex;
+}
+
+.topBorderLeft {
+  width: 6px;
+  height: 6px;
+  cursor: nwse-resize;
+}
+
+.topBorderCenter {
+  flex: 1;
+  height: 6px;
+  cursor: ns-resize;
+}
+
+.topBorderRight {
+  width: 6px;
+  height: 6px;
+  cursor: nesw-resize;
+}
+
+.leftBorder {
+  z-index: 999999;
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0px;
+  width: 6px;
+  cursor: ew-resize;
+}
+
+.rightBorder {
+  z-index: 999999;
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  right: 0px;
+  width: 6px;
+  cursor: ew-resize;
+}
+
+.bottomBorder {
+  z-index: 999999;
+  position: absolute;
+  bottom: 0px;
+  height: 6px;
+  left: 0px;
+  right: 0px;
+  display: flex;
+}
+
+.bottomBorderLeft {
+  width: 6px;
+  height: 6px;
+  cursor: nesw-resize;
+}
+
+.bottomBorderCenter {
+  flex: 1;
+  height: 6px;
+  cursor: ns-resize;
+}
+
+.bottomBorderRight {
+  width: 6px;
+  height: 6px;
+  cursor: nwse-resize;
+}

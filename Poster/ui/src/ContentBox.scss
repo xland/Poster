@@ -1,0 +1,11 @@
+.ContentBox {
+  flex: 1;
+  display: flex;
+  .leftBox {
+    background: var(--bg);
+    width: 160px;
+  }
+  .editorBox {
+    flex: 1;
+  }
+}

@@ -1,0 +1,181 @@
+@font-face {
+  font-family: "icon"; /* Project id 4538912 */
+  src: url('iconfont.ttf?t=1715319272544') format('truetype');
+}
+
+.icon {
+  font-family: "icon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-search:before {
+  content: "\e600";
+}
+
+.icon-enter:before {
+  content: "\e676";
+}
+
+.icon-saving:before {
+  content: "\e6e6";
+}
+
+.icon-commet:before {
+  content: "\e603";
+}
+
+.icon-delete:before {
+  content: "\e604";
+}
+
+.icon-tabblack:before {
+  content: "\e605";
+}
+
+.icon-setting1:before {
+  content: "\e610";
+}
+
+.icon-setting-filling:before {
+  content: "\e68b";
+}
+
+.icon-close:before {
+  content: "\e6e7";
+}
+
+.icon-minimize:before {
+  content: "\e6e8";
+}
+
+.icon-restore:before {
+  content: "\e6ea";
+}
+
+.icon-maximize:before {
+  content: "\e6e5";
+}
+
+.icon-addAriticle:before {
+  content: "\e636";
+}
+
+.icon-right:before {
+  content: "\e638";
+}
+
+.icon-heart:before {
+  content: "\e629";
+}
+
+.icon-edit:before {
+  content: "\e652";
+}
+
+.icon-left:before {
+  content: "\e60e";
+}
+
+.icon-yuyan:before {
+  content: "\e85f";
+}
+
+.icon-check0:before {
+  content: "\e72d";
+}
+
+.icon-skin:before {
+  content: "\e97f";
+}
+
+.icon-uncheck0:before {
+  content: "\e6b6";
+}
+
+.icon-error:before {
+  content: "\e6da";
+}
+
+.icon-back:before {
+  content: "\e624";
+}
+
+.icon-check:before {
+  content: "\e608";
+}
+
+.icon-uncheck:before {
+  content: "\e609";
+}
+
+.icon-time:before {
+  content: "\e66d";
+}
+
+.icon-ok:before {
+  content: "\e640";
+}
+
+.icon-svgwrite:before {
+  content: "\e650";
+}
+
+.icon-info:before {
+  content: "\e623";
+}
+
+.icon-tag:before {
+  content: "\e72c";
+}
+
+.icon-version:before {
+  content: "\e9a8";
+}
+
+.icon-user:before {
+  content: "\e7ae";
+}
+
+.icon-publish:before {
+  content: "\e6a3";
+}
+
+.icon-add:before {
+  content: "\e798";
+}
+
+.icon-update:before {
+  content: "\e606";
+}
+
+.icon-success:before {
+  content: "\e84d";
+}
+
+.icon-addCategory:before {
+  content: "\e665";
+}
+
+.icon-user-fill:before {
+  content: "\e7d5";
+}
+
+.icon-order:before {
+  content: "\e752";
+}
+
+.icon-addRect:before {
+  content: "\e670";
+}
+
+.icon-removeRect:before {
+  content: "\e672";
+}
+
+.icon-save:before {
+  content: "\e63b";
+}
+
