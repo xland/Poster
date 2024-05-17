@@ -1,11 +1,11 @@
-let fs = require("fs").promises;
+let fs = require("fs-extra");
 let esbuild = require("esbuild");
 let { sassPlugin } = require("esbuild-sass-plugin");
 
 let getTemplate = (entry) => `<html>
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-  <link rel="stylesheet" href="./res/iconfont.css">
+  <link rel="stylesheet" href="../res/iconfont.css">
   <link rel="stylesheet" href="./${entry}.css">
 </head>
 <body>
@@ -13,6 +13,10 @@ let getTemplate = (entry) => `<html>
     <script>new EventSource('/esbuild').addEventListener('change', () => location.reload())</script>
 </body>
 </html>`;
+
+let copyRes = async () => {
+  fs.copySync("./res", "./dev/res");
+};
 
 let startDevServer = async () => {
   let entry = "Index";
@@ -33,6 +37,7 @@ let startDevServer = async () => {
   return `http://localhost:${port}/index.html`;
 };
 let start = async () => {
+  await copyRes();
   let address = await startDevServer();
   console.log(`start at ${address}`);
 };

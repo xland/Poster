@@ -9,13 +9,13 @@ export default function (props) {
             <div class="TitleLabel">allen</div>
             <div class="WindowToolBox">
                 <div class="WindowToolBtn">
-                    <i class="icon iconminimize"></i>
+                    <i class="icon icon-minimize"></i>
                 </div>
                 <div class="WindowToolBtn">
-                    <i class="icon iconmaximize"></i>
+                    <i class="icon icon-maximize"></i>
                 </div>
                 <div class="WindowToolBtn closeBtn" onClick={closeWin}>
-                    <i class="icon iconclose"></i>
+                    <i class="icon icon-close"></i>
                 </div>
             </div>
         </div>
