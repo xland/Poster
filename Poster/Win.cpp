@@ -154,6 +154,7 @@ HRESULT Win::pageCtrlCallBack(HRESULT result, ICoreWebView2Controller* controlle
     settings->put_IsScriptEnabled(TRUE);
     settings->put_AreDefaultScriptDialogsEnabled(TRUE);
     settings->put_IsWebMessageEnabled(TRUE);
+
     wil::com_ptr<ICoreWebView2Settings8> settings8;
     settings->QueryInterface(IID_PPV_ARGS(&settings8));
     settings8->put_IsReputationCheckingRequired(false);
